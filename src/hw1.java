@@ -66,6 +66,16 @@ public final class hw1
       g.draw(rightPath);
     }
 
+		public void drawCloud(Graphics2D g, int sourceX, int sourceY)
+		{
+			g.setStroke(new BasicStroke(1));
+			g.setColor(new Color(169, 169, 169, 150));
+			Ellipse2D.Double cloud = new Ellipse2D.Double(sourceX, sourceY, 200, 100);
+			g.fill(cloud);
+			g.setColor(new Color(102, 102, 102));
+			g.draw(cloud);
+		}
+
 		public void		paintComponent(Graphics graphics)
 		{
       final int WIDTH = (int)BOUNDS.getWidth();
@@ -110,13 +120,53 @@ public final class hw1
       }
 
       // Draw the tree
-      final Rectangle TREE_TRUNK = new Rectangle(75, 200, 40, 300);
+      final Rectangle TREE_TRUNK = new Rectangle(75, 250, 40, 250);
       g.setStroke(new BasicStroke(1));
       g.setColor(new Color(102, 51, 0));
       g.fill(TREE_TRUNK);
       g.setColor(Color.BLACK);
       g.draw(TREE_TRUNK);
 
+			// Draw the tree top
+			g.setStroke(new BasicStroke(5));
+			g.setColor(new Color(12, 144, 36));
+			Path2D.Double treeFace = new Path2D.Double();
+			treeFace.moveTo(15, 280);
+			treeFace.lineTo(175, 280);
+			treeFace.lineTo(95, 100);
+			treeFace.lineTo(15, 280);
+			g.setColor(new Color(12, 144, 36, 150));
+			g.fill(treeFace);
+			g.draw(treeFace);
+
+			// Draw the sun
+			Image sun = fullyLoadImage("sun.png");
+			final float SCALE = .65f;
+			g.drawImage(sun, 600, 25, (int)(sun.getWidth(null)*SCALE), (int)(sun.getHeight(null)*SCALE), null);
+
+			// Draw the clouds
+			drawCloud(g, 200, 20);
+			drawCloud(g, 200, 70);
+			drawCloud(g, 250, 30);
+			drawCloud(g, 250, 80);
+			drawCloud(g, 300, 55);
+
+			// Draw ball
+			g.setStroke(new BasicStroke(0));
+			final GradientPaint BALL_PAINT = new GradientPaint(250, 460, Color.RED, 400, 390, Color.WHITE, false);
+			g.setPaint(BALL_PAINT);
+			final Ellipse2D.Double BALL = new Ellipse2D.Double(250, 370, 75, 75);
+			g.fill(BALL);
+			g.draw(BALL);
+
+			// Draw the shadow
+			final Ellipse2D.Double SHADOW = new Ellipse2D.Double(185, 435, 95, 40);
+			g.setColor(new Color(15, 15, 15, 155));
+			g.fill(SHADOW);
+			g.draw(SHADOW);
+
+			// Draw the cat
+			
 		}
 
 		private Image	fullyLoadImage(String filename)
