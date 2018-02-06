@@ -19,7 +19,7 @@ import javax.swing.*;
  */
 public final class hw1
 {
-	private static final Rectangle	BOUNDS = new Rectangle(50, 50, 800, 700);
+	private static final Rectangle	BOUNDS = new Rectangle(50, 50, 400, 420);
 
 	public static void	main(String[] argv)
 	{
@@ -44,36 +44,44 @@ public final class hw1
       // Draw the arrows
       Path2D.Double path = new Path2D.Double();
       path.moveTo(sourceX, sourceY);
-      path.lineTo(sourceX + 50, sourceY - 50);
-      path.lineTo(sourceX + 50, sourceY + 50);
+      path.lineTo(sourceX + 20, sourceY - 20);
+      path.lineTo(sourceX + 20, sourceY - 8);
+			path.lineTo(sourceX + 60, sourceY - 8);
+			path.lineTo(sourceX + 60, sourceY - 20);
+			path.lineTo(sourceX + 80, sourceY);
+			path.lineTo(sourceX + 60, sourceY + 20);
+			path.lineTo(sourceX + 60, sourceY + 8);
+			path.lineTo(sourceX + 20, sourceY + 8);
+			path.lineTo(sourceX + 20, sourceY + 20);
       path.lineTo(sourceX, sourceY);
-
-      Path2D.Double rightPath = new Path2D.Double();
-      path.moveTo(sourceX + 200, sourceY);
-      path.lineTo(sourceX + 150, sourceY - 50);
-      path.lineTo(sourceX + 150, sourceY + 50);
-      path.lineTo(sourceX + 200, sourceY);
-
-      Rectangle middlePart = new Rectangle(sourceX + 50, sourceY - 20, 100, 40);
 
       g.setColor(Color.YELLOW);
       g.fill(path);
-      g.fill(rightPath);
-      g.fill(middlePart);
       g.setColor(Color.BLACK);
-      g.draw(middlePart);
       g.draw(path);
-      g.draw(rightPath);
     }
 
 		public void drawCloud(Graphics2D g, int sourceX, int sourceY)
 		{
 			g.setStroke(new BasicStroke(1));
 			g.setColor(new Color(169, 169, 169, 150));
-			Ellipse2D.Double cloud = new Ellipse2D.Double(sourceX, sourceY, 200, 100);
+			Ellipse2D.Double cloud = new Ellipse2D.Double(sourceX, sourceY, 70, 27);
 			g.fill(cloud);
 			g.setColor(new Color(102, 102, 102));
 			g.draw(cloud);
+		}
+
+		public void drawCatEar(Graphics2D g, int sourceX, int sourceY)
+		{
+			g.setColor(new Color(204, 232, 255));
+			final Path2D.Double ear = new Path2D.Double();
+			ear.moveTo(sourceX, sourceY);
+			ear.lineTo(sourceX + 10, sourceY + 30);
+			ear.lineTo(sourceX - 10, sourceY + 30);
+			ear.lineTo(sourceX, sourceY);
+			g.fill(ear);
+			g.setColor(Color.BLACK);
+			g.draw(ear);
 		}
 
 		public void		paintComponent(Graphics graphics)
@@ -83,7 +91,7 @@ public final class hw1
       Graphics2D g = (Graphics2D)graphics;
 
       // Draw the road with a gray background
-      final Rectangle ROAD = new Rectangle(0, HEIGHT - 150, WIDTH, HEIGHT);
+      final Rectangle ROAD = new Rectangle(0, HEIGHT - 100, WIDTH, 100);
       final Color ROAD_COLOR = new Color(169, 169, 169);
       g.setColor(ROAD_COLOR);
       g.fill(ROAD);
@@ -99,7 +107,7 @@ public final class hw1
       g.draw(DIRT);
 
       // Draw the sky with gradient
-      final Rectangle SKY = new Rectangle(0, 0, WIDTH, HEIGHT / 2);
+      final Rectangle SKY = new Rectangle(0, 0, WIDTH, HEIGHT / 2 - 50);
       final Color PALE_BLUE = new Color(153, 204, 255);
       final GradientPaint SKY_PAINT = new GradientPaint(200, 0, PALE_BLUE, 200, 300, Color.WHITE, false);
       g.setPaint(SKY_PAINT);
@@ -107,20 +115,20 @@ public final class hw1
       g.draw(SKY);
 
       // Draw the arrows on the road
-      drawArrow(g, 50, HEIGHT - 75);
-      drawArrow(g, 300, HEIGHT - 75);
-      drawArrow(g, 550, HEIGHT - 75);
+      drawArrow(g, 10, (int)(ROAD.getHeight() / 2) + (int)ROAD.getY());
+      drawArrow(g, WIDTH / 2 - 50, (int)(ROAD.getHeight() / 2) + (int)ROAD.getY());
+      drawArrow(g, WIDTH - 105, (int)(ROAD.getHeight() / 2) + (int)ROAD.getY());
 
       // Draw the grass
-      g.setStroke(new BasicStroke(10));
+      g.setStroke(new BasicStroke(5));
       g.setColor(new Color(12, 144, 36));
-      for(int x = 0; x < WIDTH + 20; x+=15)
+      for(int x = 0; x < WIDTH + 20; x+=8)
       {
-        g.draw(new Line2D.Double(x, HEIGHT - 225, x - 10, HEIGHT - 153));
+        g.draw(new Line2D.Double(x, (int)(DIRT.getY() + DIRT.getHeight() * .75), x - 10, (int)(DIRT.getY() + DIRT.getHeight())));
       }
 
       // Draw the tree
-      final Rectangle TREE_TRUNK = new Rectangle(75, 250, 40, 250);
+      final Rectangle TREE_TRUNK = new Rectangle(30, 120, 15, 160);
       g.setStroke(new BasicStroke(1));
       g.setColor(new Color(102, 51, 0));
       g.fill(TREE_TRUNK);
@@ -129,44 +137,69 @@ public final class hw1
 
 			// Draw the tree top
 			g.setStroke(new BasicStroke(5));
-			g.setColor(new Color(12, 144, 36));
 			Path2D.Double treeFace = new Path2D.Double();
-			treeFace.moveTo(15, 280);
-			treeFace.lineTo(175, 280);
-			treeFace.lineTo(95, 100);
-			treeFace.lineTo(15, 280);
+			treeFace.moveTo(38, 60);
+			treeFace.lineTo(68, 180);
+			treeFace.lineTo(8, 180);
+			treeFace.lineTo(38, 60);
 			g.setColor(new Color(12, 144, 36, 150));
 			g.fill(treeFace);
+			g.setColor(new Color(12, 114, 26));
 			g.draw(treeFace);
 
 			// Draw the sun
 			Image sun = fullyLoadImage("sun.png");
-			final float SCALE = .65f;
-			g.drawImage(sun, 600, 25, (int)(sun.getWidth(null)*SCALE), (int)(sun.getHeight(null)*SCALE), null);
+			final float SCALE = .40f;
+			g.drawImage(sun, 275, 10, (int)(sun.getWidth(null)*SCALE), (int)(sun.getHeight(null)*SCALE), null);
 
 			// Draw the clouds
-			drawCloud(g, 200, 20);
-			drawCloud(g, 200, 70);
-			drawCloud(g, 250, 30);
-			drawCloud(g, 250, 80);
-			drawCloud(g, 300, 55);
+			drawCloud(g, 100, 20);
+			drawCloud(g, 135, 30);
+			drawCloud(g, 135, 25);
+			drawCloud(g, 120, 40);
+			drawCloud(g, 100, 35);
 
 			// Draw ball
 			g.setStroke(new BasicStroke(0));
-			final GradientPaint BALL_PAINT = new GradientPaint(250, 460, Color.RED, 400, 390, Color.WHITE, false);
+			final GradientPaint BALL_PAINT = new GradientPaint(100, 250, Color.RED, 200, 170, Color.WHITE, false);
 			g.setPaint(BALL_PAINT);
-			final Ellipse2D.Double BALL = new Ellipse2D.Double(250, 370, 75, 75);
+			final Ellipse2D.Double BALL = new Ellipse2D.Double(110, 200, 40, 40);
 			g.fill(BALL);
 			g.draw(BALL);
 
 			// Draw the shadow
-			final Ellipse2D.Double SHADOW = new Ellipse2D.Double(185, 435, 95, 40);
+			final Ellipse2D.Double SHADOW = new Ellipse2D.Double(85, 240, 50, 20);
 			g.setColor(new Color(15, 15, 15, 155));
 			g.fill(SHADOW);
 			g.draw(SHADOW);
 
-			// Draw the cat
-			
+			// // Draw right cat ear
+			// drawCatEar(g, 490, 340);
+			// // Draw cat head
+			// final Ellipse2D.Double catHead = new Ellipse2D.Double(430, 360, 80, 50);
+			// g.setColor(new Color(204, 232, 255));
+			// g.fill(catHead);
+			// g.setColor(Color.BLACK);
+			// g.draw(catHead);
+			// // Draw cat eye
+			// final Ellipse2D.Double eye = new Ellipse2D.Double(445, 370, 20, 15);
+			// g.setColor(Color.WHITE);
+			// g.fill(eye);
+			// g.setColor(Color.BLACK);
+			// g.draw(eye);
+			// final Ellipse2D.Double pupil = new Ellipse2D.Double(446, 373, 8, 8);
+			// g.setColor(Color.BLUE);
+			// g.fill(pupil);
+			// g.setColor(Color.BLACK);
+			// g.draw(pupil);
+			// // Draw left cat ear
+			// drawCatEar(g, 480, 340);
+			// // Draw the whiskers
+			// g.setStroke(new BasicStroke(1));
+			// g.setColor(Color.BLACK);
+			// g.draw(new Arc2D.Double(406, 390, 70, 50, 90, 80, Arc2D.OPEN));
+			// g.draw(new Arc2D.Double(416, 390, 70, 50, 90, 80, Arc2D.OPEN));
+			// g.draw(new Arc2D.Double(426, 390, 70, 50, 90, 80, Arc2D.OPEN));
 		}
 
 		private Image	fullyLoadImage(String filename)
