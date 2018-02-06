@@ -1,5 +1,5 @@
 //******************************************************************************
-// Last modified: Sun Feb 04 2018 by Austin Graham
+// Last modified: Tuesday Feb 06 2018 by Austin Graham 112887841
 //******************************************************************************
 //
 // Recreate the picture given in the homework description
@@ -12,17 +12,19 @@ import javax.swing.*;
 //******************************************************************************
 
 /**
- * The <CODE>hw1</CODE> class.<P>
+ * The <CODE>Drawing</CODE> class.<P> It draws the sample picture.
  *
  * @author  Austin Graham
  * @version %I%, %G%
  */
-public final class hw1
+public final class Drawing
 {
+	// Bounds of the JFrame
 	private static final Rectangle	BOUNDS = new Rectangle(50, 50, 400, 420);
 
 	public static void	main(String[] argv)
 	{
+		// Create and open the JFrame containing the drawn image
 		JFrame	frame = new JFrame("Picture For HW1");
 		JPanel	panel = new Panel();
 
@@ -39,9 +41,16 @@ public final class hw1
 	private static final class Panel extends JPanel
 	{
 
-    public void drawArrow(Graphics2D g, int sourceX, int sourceY)
+		/*
+		* Draw a road arrow at a particular x, y coordinate
+		*
+		* @param g: The Graphics2D object
+		* @param sourceX: The x start position
+		* @param sourceY: The y start position
+		*/
+    private void drawArrow(Graphics2D g, int sourceX, int sourceY)
     {
-      // Draw the arrows
+      // Draw the arrow as Path2D object
       Path2D.Double path = new Path2D.Double();
       path.moveTo(sourceX, sourceY);
       path.lineTo(sourceX + 20, sourceY - 20);
@@ -61,8 +70,16 @@ public final class hw1
       g.draw(path);
     }
 
-		public void drawCloud(Graphics2D g, int sourceX, int sourceY)
+		/*
+		* Draws a grey cloud object at an x, y position.
+		*
+		* @param g: The Graphics2D object
+		* @param sourceX: The x position
+		* @param sourceY: The y position
+		*/
+		private void drawCloud(Graphics2D g, int sourceX, int sourceY)
 		{
+			// Draw a grey cloud as an ellipse with an alpha'd fill
 			g.setStroke(new BasicStroke(1));
 			g.setColor(new Color(169, 169, 169, 150));
 			Ellipse2D.Double cloud = new Ellipse2D.Double(sourceX, sourceY, 70, 27);
@@ -71,8 +88,16 @@ public final class hw1
 			g.draw(cloud);
 		}
 
-		public void drawCatEar(Graphics2D g, int sourceX, int sourceY)
+		/*
+		* Draw the ear of the cat at some x, y position
+		*
+		* @param g: The Graphics2D object
+		* @param sourceX: The x position
+		* @param sourceY: The y position
+		*/
+		private void drawCatEar(Graphics2D g, int sourceX, int sourceY)
 		{
+			// Draw the cat ear as a Path2D object
 			g.setColor(new Color(204, 232, 255));
 			final Path2D.Double ear = new Path2D.Double();
 			ear.moveTo(sourceX, sourceY);
@@ -84,8 +109,22 @@ public final class hw1
 			g.draw(ear);
 		}
 
-		public void drawCatLeg(Graphics2D g, int fromX, int fromY, int toX, int toY, int transX, int transY)
+		/*
+		* Draw the a single leg of a cat given a start and end coordinate
+		*
+		* @param g: The Graphics2D object
+		* @param fromX: The start x position
+		* @param fromY: The start y position
+		* @param toX: The end x position
+		* @param toY: The end y position
+		* @param transX: Foot x transformation
+		* @param transY: Foot y transformation
+		*/
+		private void drawCatLeg(Graphics2D g, int fromX, int fromY, int toX, int toY, int transX, int transY)
 		{
+			// Draw the leg as a line, and the foot
+			// as a circle, applying transformations to
+			// it seems to connect
 			g.setStroke(new BasicStroke(7));
 			g.draw(new Line2D.Double(fromX, fromY, toX, toY));
 			Ellipse2D.Double foot = new Ellipse2D.Double(toX + transX, toY + transY, 10, 10);
@@ -93,8 +132,17 @@ public final class hw1
 			g.draw(foot);
 		}
 
-		public void drawFlower(Graphics2D g, int sourceX, int sourceY)
+		/*
+		* Draw a flower at some x, y position
+		*
+		* @param g: The Graphics2D object
+		* @param sourceX: The source x position
+		* @param sourceY: The source y position
+		*/
+		private void drawFlower(Graphics2D g, int sourceX, int sourceY)
 		{
+			// Draw the stem as a rectangle and flower as a path2D making
+			// a square
 			Rectangle2D.Double stem = new Rectangle2D.Double(sourceX, sourceY, 5, 40);
 			Path2D.Double flower = new Path2D.Double();
 			flower.moveTo(sourceX + 2, sourceY - 20);
@@ -107,6 +155,7 @@ public final class hw1
 			g.draw(stem);
 			g.setColor(new Color(153, 153, 255));
 			g.fill(flower);
+			// Define a dashed stroke for the outer edge of the flower
 			Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0);
 			g.setStroke(dashed);
 			g.setColor(Color.BLACK);
@@ -114,8 +163,14 @@ public final class hw1
 			g.setStroke(new BasicStroke(1));
 		}
 
+		/*
+		* Draws within the JFrame. This instance imitates to a degree
+		* the source image given in the project description.
+		*/
 		public void		paintComponent(Graphics graphics)
 		{
+			// Define the bounds of the window and
+			// the graphics 2D object
       final int WIDTH = (int)BOUNDS.getWidth();
       final int HEIGHT = (int)BOUNDS.getHeight();
       Graphics2D g = (Graphics2D)graphics;
@@ -203,7 +258,7 @@ public final class hw1
 			g.fill(SHADOW);
 			g.draw(SHADOW);
 
-			// Draw the text
+			// Draw the "so" text
 			Font font = new Font("Serif", Font.PLAIN, 35);
 			g.setColor(Color.BLACK);
 			g.setFont(font);
@@ -211,15 +266,18 @@ public final class hw1
 			g.setStroke(new BasicStroke(3));
 			g.draw(new Line2D.Double(57, 83, 87, 83));
 
+			// Draw the outline for "much"
 			final Rectangle muchRect = new Rectangle(90, 80, 85, 40);
 			g.setStroke(new BasicStroke(1));
 			g.draw(muchRect);
 
+			// Draw the "much" text
 			g.setColor(Color.RED);
 			font = new Font("Serif", Font.PLAIN, 35);
 			g.setFont(font);
 			g.drawString("much", 93, 108);
 
+			// Draw the ellipse surrounding the word color
 			final RoundRectangle2D.Double colorEllipse = new RoundRectangle2D.Double(177, 107, 85, 45, 50, 50);
 			g.setColor(new Color(0, 153, 153));
 			g.fill(colorEllipse);
@@ -227,11 +285,13 @@ public final class hw1
 			g.setStroke(new BasicStroke(3));
 			g.draw(colorEllipse);
 
+			// Draw the "color!" text
 			font = new Font("Serif", Font.ITALIC, 30);
 			g.setColor(Color.WHITE);
 			g.setFont(font);
 			g.drawString("color!", 181, 137);
 
+			// Reset the stroke
 			g.setStroke(new BasicStroke(1));
 			// Draw right cat ear
 			drawCatEar(g, 220, 150);
@@ -247,6 +307,7 @@ public final class hw1
 			g.fill(eye);
 			g.setColor(Color.BLACK);
 			g.draw(eye);
+			// Draw the cat pupil
 			final Ellipse2D.Double pupil = new Ellipse2D.Double(184, 180, 3, 3);
 			g.setColor(new Color(0, 153, 153));
 			g.fill(pupil);

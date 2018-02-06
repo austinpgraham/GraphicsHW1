@@ -1,3 +1,3 @@
 run:
-	javac hw1.java
-	java hw1
+	javac Drawing.java
+	java Drawing
