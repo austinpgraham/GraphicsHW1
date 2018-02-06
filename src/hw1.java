@@ -12,7 +12,7 @@ import javax.swing.*;
 //******************************************************************************
 
 /**
- * The <CODE>Drawing</CODE> class.<P>
+ * The <CODE>hw1</CODE> class.<P>
  *
  * @author  Austin Graham
  * @version %I%, %G%
@@ -173,33 +173,70 @@ public final class hw1
 			g.fill(SHADOW);
 			g.draw(SHADOW);
 
-			// // Draw right cat ear
-			// drawCatEar(g, 490, 340);
-			// // Draw cat head
-			// final Ellipse2D.Double catHead = new Ellipse2D.Double(430, 360, 80, 50);
-			// g.setColor(new Color(204, 232, 255));
-			// g.fill(catHead);
-			// g.setColor(Color.BLACK);
-			// g.draw(catHead);
-			// // Draw cat eye
-			// final Ellipse2D.Double eye = new Ellipse2D.Double(445, 370, 20, 15);
-			// g.setColor(Color.WHITE);
-			// g.fill(eye);
-			// g.setColor(Color.BLACK);
-			// g.draw(eye);
-			// final Ellipse2D.Double pupil = new Ellipse2D.Double(446, 373, 8, 8);
-			// g.setColor(Color.BLUE);
-			// g.fill(pupil);
-			// g.setColor(Color.BLACK);
-			// g.draw(pupil);
-			// // Draw left cat ear
-			// drawCatEar(g, 480, 340);
-			// // Draw the whiskers
-			// g.setStroke(new BasicStroke(1));
-			// g.setColor(Color.BLACK);
-			// g.draw(new Arc2D.Double(406, 390, 70, 50, 90, 80, Arc2D.OPEN));
-			// g.draw(new Arc2D.Double(416, 390, 70, 50, 90, 80, Arc2D.OPEN));
-			// g.draw(new Arc2D.Double(426, 390, 70, 50, 90, 80, Arc2D.OPEN));
+			// Draw the text
+			Font font = new Font("Serif", Font.PLAIN, 35);
+			g.setColor(Color.BLACK);
+			g.setFont(font);
+			g.drawString("so", 57, 80);
+			g.setStroke(new BasicStroke(3));
+			g.draw(new Line2D.Double(57, 83, 87, 83));
+
+			final Rectangle muchRect = new Rectangle(90, 80, 85, 40);
+			g.setStroke(new BasicStroke(1));
+			g.draw(muchRect);
+
+			g.setColor(Color.RED);
+			font = new Font("Serif", Font.PLAIN, 35);
+			g.setFont(font);
+			g.drawString("much", 93, 108);
+
+			final RoundRectangle2D.Double colorEllipse = new RoundRectangle2D.Double(177, 107, 85, 45, 50, 50);
+			g.setColor(new Color(0, 153, 153));
+			g.fill(colorEllipse);
+			g.setColor(Color.BLACK);
+			g.setStroke(new BasicStroke(3));
+			g.draw(colorEllipse);
+
+			font = new Font("Serif", Font.ITALIC, 30);
+			g.setColor(Color.WHITE);
+			g.setFont(font);
+			g.drawString("color!", 181, 137);
+
+			g.setStroke(new BasicStroke(1));
+			// Draw right cat ear
+			drawCatEar(g, 220, 150);
+			// Draw cat head
+			final Ellipse2D.Double catHead = new Ellipse2D.Double(175, 170, 55, 30);
+			g.setColor(new Color(204, 232, 255));
+			g.fill(catHead);
+			g.setColor(Color.BLACK);
+			g.draw(catHead);
+			// Draw cat eye
+			final Ellipse2D.Double eye = new Ellipse2D.Double(183, 177, 13, 8);
+			g.setColor(Color.WHITE);
+			g.fill(eye);
+			g.setColor(Color.BLACK);
+			g.draw(eye);
+			final Ellipse2D.Double pupil = new Ellipse2D.Double(184, 180, 3, 3);
+			g.setColor(new Color(0, 153, 153));
+			g.fill(pupil);
+			g.setColor(Color.BLACK);
+			g.draw(pupil);
+			// Draw left cat ear
+			drawCatEar(g, 210, 150);
+			// Draw the whiskers
+			g.setStroke(new BasicStroke(1));
+			g.setColor(Color.BLACK);
+			g.draw(new Arc2D.Double(169, 188, 35, 25, 90, 80, Arc2D.OPEN));
+			g.draw(new Arc2D.Double(162, 188, 35, 25, 90, 80, Arc2D.OPEN));
+			g.draw(new Arc2D.Double(178, 188, 35, 25, 90, 80, Arc2D.OPEN));
+
+			// Draw the cats body
+			final Ellipse2D.Double catBody = new Ellipse2D.Double(195, 195, 80, 40);
+			g.setColor(new Color(204, 232, 255));
+			g.fill(catBody);
+			g.setColor(Color.BLACK);
+			g.draw(catBody);
 		}
 
 		private Image	fullyLoadImage(String filename)
