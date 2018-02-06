@@ -84,6 +84,36 @@ public final class hw1
 			g.draw(ear);
 		}
 
+		public void drawCatLeg(Graphics2D g, int fromX, int fromY, int toX, int toY, int transX, int transY)
+		{
+			g.setStroke(new BasicStroke(7));
+			g.draw(new Line2D.Double(fromX, fromY, toX, toY));
+			Ellipse2D.Double foot = new Ellipse2D.Double(toX + transX, toY + transY, 10, 10);
+			g.fill(foot);
+			g.draw(foot);
+		}
+
+		public void drawFlower(Graphics2D g, int sourceX, int sourceY)
+		{
+			Rectangle2D.Double stem = new Rectangle2D.Double(sourceX, sourceY, 5, 40);
+			Path2D.Double flower = new Path2D.Double();
+			flower.moveTo(sourceX + 2, sourceY - 20);
+			flower.lineTo(sourceX - 12, sourceY - 10);
+			flower.lineTo(sourceX + 2, sourceY + 5);
+			flower.lineTo(sourceX + 15, sourceY - 10);
+			flower.lineTo(sourceX + 2, sourceY - 20);
+			g.setColor(new Color(204, 204, 0));
+			g.fill(stem);
+			g.draw(stem);
+			g.setColor(new Color(153, 153, 255));
+			g.fill(flower);
+			Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0);
+			g.setStroke(dashed);
+			g.setColor(Color.BLACK);
+			g.draw(flower);
+			g.setStroke(new BasicStroke(1));
+		}
+
 		public void		paintComponent(Graphics graphics)
 		{
       final int WIDTH = (int)BOUNDS.getWidth();
@@ -231,12 +261,25 @@ public final class hw1
 			g.draw(new Arc2D.Double(162, 188, 35, 25, 90, 80, Arc2D.OPEN));
 			g.draw(new Arc2D.Double(178, 188, 35, 25, 90, 80, Arc2D.OPEN));
 
+			// Draw the cats legs
+			drawCatLeg(g, 235, 215, 200, 245, -10, 0);
+			drawCatLeg(g, 235, 215, 225, 250, -7, 0);
+			drawCatLeg(g, 235, 215, 245, 250, -3, 0);
+			drawCatLeg(g, 235, 215, 270, 250, -5, 0);
+
 			// Draw the cats body
-			final Ellipse2D.Double catBody = new Ellipse2D.Double(195, 195, 80, 40);
+			g.setStroke(new BasicStroke(1));
+			final Ellipse2D.Double catBody = new Ellipse2D.Double(195, 195, 80, 40); // 235, 215
 			g.setColor(new Color(204, 232, 255));
 			g.fill(catBody);
 			g.setColor(Color.BLACK);
 			g.draw(catBody);
+
+			// Draw the flowers
+			drawFlower(g, 340, 150);
+			drawFlower(g, 315, 160);
+			drawFlower(g, 365, 155);
+			drawFlower(g, 380, 177);
 		}
 
 		private Image	fullyLoadImage(String filename)
